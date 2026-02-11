@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# Allow .md and .ps1 files
+!*.md
+!*.ps1
+
+# Allow .gitignore itself
+!.gitignore
+
