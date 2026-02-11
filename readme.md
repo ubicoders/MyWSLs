@@ -6,7 +6,7 @@ Import, configure, and manage custom WSL (Windows Subsystem for Linux) distribut
 
 ## 1. How to Use This Project
 
-This project provides scripts to quickly spin up custom Ubuntu WSL distros with a pre-configured user, sudo access, and ROS 2 (Jazzy).
+This project provides scripts to quickly spin up custom Ubuntu WSL distros with a pre-configured user and sudo access.
 
 **What's included:**
 
@@ -19,17 +19,13 @@ This project provides scripts to quickly spin up custom Ubuntu WSL distros with 
 
 1. Download the Ubuntu image (see Section 2)
 2. Run the setup script (see Section 4)
-3. Launch your distro: `wsl -d ubicoders_u24`
+3. Launch your distro: `wsl -d my-ubuntu`
 
 ---
 
 ## 2. Downloading the Ubuntu Image
 
-Download the pre-built **ubicoders** image:
-
-- Get the `ubicoders_u24.tar` file and place it in this project folder.
-
-If you need a vanilla Ubuntu 24.04 WSL image instead, download from the official source:
+You can use a custom pre-built image or download a vanilla Ubuntu 24.04 WSL image from the official source:
 
 - https://cloud-images.ubuntu.com/wsl/releases/24.04/current/
 - Choose `ubuntu-noble-wsl-amd64-wsl.rootfs.tar.gz`
@@ -88,7 +84,7 @@ wsl --export <DistroName> <OutputFile.tar>
 Example:
 
 ```powershell
-wsl --export ubicoders_u24 ubicoders_u24_backup.tar
+wsl --export my-ubuntu my-ubuntu_backup.tar
 ```
 
 ### Import (Upload/Restore) a Distro
@@ -100,7 +96,7 @@ wsl --import <NewDistroName> <InstallFolder> <TarFile>
 Example:
 
 ```powershell
-wsl --import ubicoders_u24 .\ubicoders_u24 .\ubicoders_u24.tar
+wsl --import my-ubuntu .\my-ubuntu .\my-ubuntu.tar
 ```
 
 ### Set the Default Distro
@@ -133,9 +129,9 @@ The setup script walks you through importing a distro and configuring it interac
 
 | Prompt | Default | Notes |
 |--------|---------|-------|
-| Distro name | `ubicoders_u24` | Press Enter to accept, or `n` to type a custom name |
+| Distro name | `my-ubuntu` | Press Enter to accept, or `n` to type a custom name |
 | Install folder | `.\<DistroName>` | Where the distro's virtual disk is stored |
-| Tar file | `.\ubicoders_u24.tar` | Path to the image file |
+| Tar file | `.\my-ubuntu.tar` | Path to the image file |
 | Username | *(required)* | The Linux user to create |
 | Password | *(required, masked)* | Password for the new user |
 
@@ -144,14 +140,13 @@ The setup script walks you through importing a distro and configuring it interac
 1. Creates the install folder if it doesn't exist
 2. Imports the distro from the tar file via `wsl --import`
 3. Creates the user with sudo access and sets it as the default login user
-4. Adds `source /opt/ros/jazzy/setup.bash` to the user's `.bashrc`
-5. Runs `apt-get update && apt-get upgrade`
-6. Restarts the distro
+4. Runs `apt-get update && apt-get upgrade`
+5. Restarts the distro
 
 After setup completes, launch with:
 
 ```powershell
-wsl -d ubicoders_u24
+wsl -d my-ubuntu
 ```
 
 **Troubleshooting:** Run `.\ubi-doctor.ps1` to check if the tar file, install folder, and distro registration are all in place.
@@ -164,19 +159,18 @@ To customize the defaults for your own image, edit the default values at the top
 
 ```powershell
 # Line 5 — Default distro name
-$default = "ubicoders_u24"
+$default = "my-ubuntu"
 
 # Line 14 — Default install folder (uses distro name)
 $default = ".\$DistroName"
 
 # Line 23 — Default tar file path
-$default = ".\ubicoders_u24.tar"
+$default = ".\my-ubuntu.tar"
 ```
 
 **Common customizations:**
 
 - **Different image:** Change the tar file default on line 23 to point to your own `.tar` file.
 - **Different distro name:** Change the name on line 5 (the install folder will follow automatically).
-- **Skip ROS 2 setup:** Remove or comment out the ROS 2 block (lines 96–108) if your image doesn't include ROS.
 - **Add extra packages:** Add more `apt-get install` commands to the update block (around line 113).
 - **Run additional setup scripts:** Add a new step after the package update to run any post-install scripts inside the distro.
