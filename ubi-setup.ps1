@@ -1,31 +1,33 @@
+# --- Defaults ---
+$DefaultDistroName = "ubicoders_u24"
+$DefaultTarFile = ".\$DefaultDistroName.tar"
+
 Write-Host "=== WSL Setup ===" -ForegroundColor Cyan
 Write-Host ""
 
 # --- Distro Name ---
-$default = "ubicoders_u24"
-$input = Read-Host "  Distro name? ($default) (Y/n)"
+$input = Read-Host "  Distro name? ($DefaultDistroName) (Y/n)"
 if ($input -eq "n" -or $input -eq "N") {
     $DistroName = Read-Host "  Enter distro name"
 } else {
-    $DistroName = $default
+    $DistroName = $DefaultDistroName
 }
 
 # --- Install Folder ---
-$default = ".\$DistroName"
-$input = Read-Host "  Install folder? ($default) (Y/n)"
+$DefaultInstallFolder = ".\$DistroName"
+$input = Read-Host "  Install folder? ($DefaultInstallFolder) (Y/n)"
 if ($input -eq "n" -or $input -eq "N") {
     $InstallFolder = Read-Host "  Enter install folder"
 } else {
-    $InstallFolder = $default
+    $InstallFolder = $DefaultInstallFolder
 }
 
 # --- Tar File ---
-$default = ".\ubicoders_u24.tar"
-$input = Read-Host "  Tar file? ($default) (Y/n)"
+$input = Read-Host "  Tar file? ($DefaultTarFile) (Y/n)"
 if ($input -eq "n" -or $input -eq "N") {
     $TarFile = Read-Host "  Enter tar file path"
 } else {
-    $TarFile = $default
+    $TarFile = $DefaultTarFile
 }
 
 # --- Username (always required) ---
